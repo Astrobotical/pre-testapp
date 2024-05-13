@@ -1,0 +1,48 @@
+.container{
+    height: 120px;
+    padding-right: 10px;
+    padding-left: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    border: 2px solid white;
+    border-bottom-left-radius: 25px;
+    border-top-right-radius: 25px;
+    .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .col{
+        display: flex;
+        flex-direction: column;
+    }
+    ion-icon{
+        padding-top:15px;
+        font-size: 80px;
+        color: white;
+        &:hover {
+            color: red;
+        }
+    }
+    &:hover {
+        background-color: aqua;
+    }
+}
+.sub-container{
+    .row{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-left:15px;
+        margin-right: right 15px;
+    }
+    ion-icon{
+        font-size: 80px;
+        color: black;
+        &:hover {
+            color: red;
+        }
+    }
+}

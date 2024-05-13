@@ -1,0 +1,68 @@
+<ion-content [fullscreen]="true">
+  <div class="form-header">
+    <ion-icon name="arrow-back-outline"></ion-icon>
+  </div>
+  <div class="form-welcome">
+    <h1>Register</h1>
+    <p>Fill in the form below to create an account</p>
+  </div>
+  <form class="form-container">
+          <ion-row class="top">
+          <div class="form-item ">
+            <div class="label">
+            <ion-label >
+              First Name
+            </ion-label>
+            </div>
+              <ion-input type="text" labelPlacement="stacked" placeholder="Enter your given name" [(ngModel)]="user.user_FirstName" label-placement="floating" fill="outline" errorText="">
+                  <ion-icon slot="start" name="person-outline" aria-hidden="true"></ion-icon>
+              </ion-input>
+          </div>
+          <div class="form-item">
+            <div class="label">
+            <ion-label >
+              Last Name
+            </ion-label>
+            </div>
+              <ion-input type="text" labelPlacement="stacked" placeholder="Enter your surname" [(ngModel)]="user.user_LastName" label-placement="floating" fill="outline" errorText="">
+                  <ion-icon slot="start" name="person-outline" aria-hidden="true"></ion-icon>
+              </ion-input>
+          </div>
+          </ion-row>
+          <ion-row class="bottom">
+          <div class="form-item">
+            <div class="label">
+            <ion-label >
+              Password
+            </ion-label>
+            </div>
+              <ion-input type="password" labelPlacement="stacked" placeholder="Enter your password" label-placement="floating" fill="outline" [(ngModel)]="user.user_Password">
+                  <ion-icon slot="start" name="lock-closed-outline" aria-hidden="true"></ion-icon>
+              </ion-input>
+          </div>
+          
+          <div class="form-item">
+            <div class="label">
+            <ion-label >
+              Confirm Password
+            </ion-label>
+            
+            </div>
+              <ion-input [type]="showconfirmPassword ? 'text':'password'" labelPlacement="stacked" placeholder="Confirm your password" label-placement="floating" fill="outline" [(ngModel)]="confirmedPassword">
+                  <ion-icon slot="end" [name]="showconfirmPassword? 'eye-outline': 'eye-off-outline'" (click)="toggleShowConfirmPassword()" aria-hidden="true"></ion-icon>
+              </ion-input>
+          </div>
+        </ion-row>
+        <div class="form-item">
+          <div class="label">
+          <ion-label >
+            Email Address
+          </ion-label>
+          </div>
+          <ion-input type="email" labelPlacement="stacked" placeholder="Email" class="email" [(ngModel)]="user.user_Email" label-placement="floating" fill="outline" errorText="">
+              <ion-icon slot="start" name="mail-outline" aria-hidden="true"></ion-icon>
+          </ion-input>
+        </div>
+              <ion-button expand="block" size="large" (click)="submitformData()">Register</ion-button>
+        </form>
+  </ion-content>

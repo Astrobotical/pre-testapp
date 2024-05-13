@@ -1,0 +1,26 @@
+<ion-content [fullscreen]="true" >
+  <div class="form-container">
+  <h2>tracer</h2>
+    <div class="form-item">
+      <ion-input type="email" labelPlacement="stacked" placeholder="Enter your email" [(ngModel)]="email" label-placement="floating" fill="outline" errorText="">
+        <ion-icon slot="start" name="mail-outline" aria-hidden="true"></ion-icon>
+      </ion-input>
+    </div>
+    <div class="form-item">
+      <ion-input [type]="showPassword ? 'text':'password'" labelPlacement="stacked" placeholder="Enter your password" label-placement="floating" fill="outline" [(ngModel)]="password">
+        <ion-icon slot="start" name="lock-closed-outline" aria-hidden="true"></ion-icon>
+        <ion-icon slot="end" [name]="showPassword ? 'eye-outline': 'eye-off-outline'"(click)="togglePassword()" aria-hidden="true"></ion-icon>
+      </ion-input>
+    </div>
+    <div class="form-item">
+      <ion-checkbox slot="start" [(ngModel)]="rememberMe" (ngModelChange)="setPreferences() "></ion-checkbox>
+      <ion-label style=" margin-left: 10px;">Remember me</ion-label>
+    </div>  
+    <div class="button">
+      <ion-button shape="round" (click)="userSignIn()">login</ion-button>
+    </div>
+    <div class="signup-link">
+      Don't have an account? <a (click)="userSignUp()">Sign Up</a>
+      </div>
+    </div>
+</ion-content>

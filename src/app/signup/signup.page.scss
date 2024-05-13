@@ -1,0 +1,60 @@
+
+    ion-row {
+        display: flex;
+        justify-content: space-evenly;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom:15px;
+    }
+
+    .form-item {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .top{
+        margin-top: 12.5px;
+        margin-bottom: 12.5px;
+    }
+    ion-button{
+        margin-top: 35px;
+        margin-bottom: 20px;
+        margin-left: 10px;
+        margin-right:10px;
+        --border-radius: 15px;
+    }
+    .form-header{
+        margin-top: 30px;
+        margin-bottom: 50px;
+        display: flex;
+        flex-direction: row;
+        align-items: center; /* Add this line to align the form-header in the middle of the row */
+        
+        ion-icon{
+            font-size: 40px;
+            justify-self: start;
+            margin-left:15px;
+        }
+
+    }
+    .form-welcome{
+        margin-left:15px;
+        h1{
+            font-size: 40px;
+            font-weight: bold;}
+        p{
+            font-size: 20px;
+            color:grey;
+        }
+    }
+    h2{
+        font-size: 40px;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .label{
+        margin-top: 25px;
+        margin-bottom: 15px;
+    }

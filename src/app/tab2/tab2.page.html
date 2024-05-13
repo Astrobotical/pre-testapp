@@ -1,17 +1,36 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+ 
+  <div class="main-container"  *ngIf="showingDetails === false">
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <select>
+    <option selected disabled>Select a time</option>
+    <option value="5"> Last 5 runs</option>
+    <option value="10"> Last 10 runs</option>
+    <option value="15"> Last 15 runs</option>
+  </select>
+
+  <div *ngFor="let value of Data">
+    <div class="container" id="maincontain" (click)="raceDetails(value)">
+      <div class="row">
+        <div class="col">
+          <h4> Date : {{formatDate(value.date)}}</h4>
+          <h4> Run Type - {{value.type}}</h4>
+        </div>
+        <ion-icon name="chevron-forward-outline"  ></ion-icon>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="sub-container" [style.display]="showingDetails ? 'block' : 'none'">
+    <div class="row">
+      <ion-icon name="chevron-back-outline" (click)="goBack()"></ion-icon>
+      <h4> Date : {{formatDate(selectedItem.date)}}</h4>
+      <h4> Run Type - {{selectedItem.type}}</h4>
+    </div>
+    <ion-card>
+      <ion-card-content>
+        <canvas #lineCanvas style="position: relative; height:20vh; width:40vw"></canvas>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

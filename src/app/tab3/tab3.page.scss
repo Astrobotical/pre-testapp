@@ -1,0 +1,31 @@
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    margin-right: 15px;
+
+    .form-item {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border-radius: 15px;
+    }
+    .button{
+        font-size: 20px;
+        align-self:center;
+        margin-top: 20px;
+    }
+    h2{
+        font-size: 25px;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

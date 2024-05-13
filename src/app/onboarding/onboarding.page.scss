@@ -1,0 +1,33 @@
+swiper-slide{
+    height: 100%;
+    
+    img{
+        width: 100%;
+        height: 70%;
+        object-fit: cover;
+    }
+}
+
+swiper-container{
+    height: 80%;
+}
+ion-toolbar{
+    --background: transparent;
+}
+ion-content{
+    --background: grey ;
+}
+ion-button{
+    --color : white;
+}
+.boarding{
+    margin-top:15px;
+    margin-left:15px;
+    h1{
+        font-size: 60px;
+        font-weight: bold;}
+    p{
+        font-size: 20px;
+       
+    }
+}
