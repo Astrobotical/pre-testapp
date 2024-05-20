@@ -1,8 +1,8 @@
 <ion-content [fullscreen]="true">
-  <div class="onboarding-header">
+  <div class="header">
     <ion-toolbar fill="clear">
       <ion-buttons slot="start" fill="clear">
-        <ion-button  (click)="previousSlide()"></ion-button>
+        <ion-button  (click)="nextSlide()"></ion-button>
         <ion-icon name="chevron-back" slot="icon-only"></ion-icon>
         </ion-buttons>
       <ion-buttons slot="end">
@@ -13,29 +13,30 @@
   <swiper-container #swiperRef
   [afterinit]="onSliderInit()" 
   [pagination]="true" 
-  [loop] = "true"
   >
       <swiper-slide>
-        <img src="https://cdni.iconscout.com/illustration/free/thumb/free-walking-man-1668004-1415671.png?f=webp" alt="onboarding1">
+        <img src="./assets/imgs/1runner.png">
         <div class="boarding">
         <h2>Welcome to Tracer</h2>
         <p>Tracer is a contact tracing app that helps you keep track of your contacts and their health status</p>
         </div>
       </swiper-slide>
       <swiper-slide>
-        <img src="https://cdni.iconscout.com/illustration/premium/thumb/walking-boy-3470044-2941338.png" alt="onboarding2">
+        <img src="./assets/imgs/3runner.png" alt="onboarding3">
+        <div class="boarding">
+        <h2>Stay safe</h2>
+        <p>Tracer does NOt help you</p>
+      </div>
+      </swiper-slide>
+      <swiper-slide>
+        <img src="./assets/imgs/2runner.png" alt="onboarding2">
         <div class="boarding">
         <h2>Keep track of your contacts</h2>
         <p>Tracer helps you keep track of your contacts and their health status</p>
      </div>
       </swiper-slide>
-      <swiper-slide>
-        <img src="https://i.pinimg.com/originals/d0/e8/67/d0e8674be91f38d6e47abbc31a9a3bdd.png" alt="onboarding3">
-        <div class="boarding">
-        <h2>Stay safe</h2>
-        <p>Tracer helps you keep track of your contacts and their health status</p>
-      </div>
-      </swiper-slide>
+    
+
     <div class="swiper-pagination"></div>
   </swiper-container>
 </ion-content>

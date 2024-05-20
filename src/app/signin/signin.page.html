@@ -1,0 +1,35 @@
+<ion-content [fullscreen]="true" >
+  <div class="header" >
+    <ion-icon class="back" name="arrow-back-outline" (click)="userGoback()" ></ion-icon>
+  </div>
+  <div class="form-welcome">
+    <h1>Sign In </h1>
+    <p style="color:white;">Fill in the form below to login.</p>
+  </div>
+  
+  <div class="form-container">
+    <form name="signup">
+    <div class="form-item">
+      <ion-input type="email" labelPlacement="stacked" placeholder="Enter your email" [(ngModel)]="email" name="Email" label-placement="floating"  errorText="">
+        <ion-icon slot="start" name="mail-outline" aria-hidden="true"></ion-icon>
+      </ion-input>
+    </div>
+    <div class="form-item">
+      <ion-input color="white" [type]="showPassword ? 'text':'password'" name="Password" labelPlacement="stacked" placeholder="Enter your password" label-placement="floating"  [(ngModel)]="password">
+        <ion-icon slot="start" name="lock-closed-outline" aria-hidden="true"></ion-icon>
+        <ion-icon slot="end" [name]="showPassword ? 'eye-outline': 'eye-off-outline'"(click)="togglePassword()" aria-hidden="true"></ion-icon>
+      </ion-input>
+    </div>
+    <div class="form-item">
+      <ion-checkbox slot="start" [(ngModel)]="rememberMe" [checked]="rememberMe" name="rememberMe" (ngModelChange)="setPreferences() " ></ion-checkbox>
+      <ion-label style=" margin-left: 10px;">Remember me</ion-label>
+    </div> 
+  </form> 
+  <ng-container *ngIf="wasRemembered">
+    <ion-button size="block" (click)="performBiometricVerificatin()">Sign in with FaceID</ion-button>
+  </ng-container>
+  <ng-container *ngIf="!wasRemembered">
+    <ion-button size="block" (click)="userSignIn()">Sign in</ion-button>
+  </ng-container>
+  </div>
+</ion-content>

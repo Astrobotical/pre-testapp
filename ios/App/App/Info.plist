@@ -27,13 +27,23 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-    <string>$BLUETOOTH_USAGE_DESCRIPTION</string>
+	 <string>$BLUETOOTH_USAGE_DESCRIPTION</string>
+	<key>NSFaceIDUsageDescription</key>
+<string>We need to access Face ID for authentication</string>
+<key>NSBiometricUsageDescription</key>
+<string>We need to access biometric authentication for authentication</string>
+   
+	<key>UIBackgroundModes</key>
+    <array>
+        <string>audio</string>
+    </array>
+
 	<key>UIRequiredDeviceCapabilities</key>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-    <string>$BLUETOOTH_USAGE_DESCRIPTION</string>
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+    <string>$BLUETOOTH_USAGE_DESCRIPTION</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -49,5 +59,6 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+
 </dict>
 </plist>

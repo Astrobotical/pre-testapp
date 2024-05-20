@@ -19,4 +19,17 @@ export class SpeedData {
         this.speed_HeartRate = speed_HeartRate;
         this.speed_UserID = speed_UserID;
     }
+   static fromJson(json: any): SpeedData {
+        return new SpeedData(
+            json.speed_ID,
+            json.speed_Date,
+            json.speed_Time,
+            json.speed_Speed,
+            json.speed_Distance,
+            json.speed_Duration,
+            json.speed_Calories,
+            json.speed_HeartRate,
+            json.speed_UserID
+        );
+    }
 }

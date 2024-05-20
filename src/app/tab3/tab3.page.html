@@ -1,6 +1,7 @@
 <ion-content [fullscreen]="true">
+<div class="header form-container">
 
-<div class="form-container">
+  
   <h2>Profile</h2>
   <div class="form-item">
     <ion-input label="First Name" type="text" [(ngModel)]="User.user_FirstName" label-placement="floating" fill="outline"></ion-input>
@@ -43,8 +44,9 @@
     </ion-segment-button>
   </ion-segment>
   </div>
+  <ion-button shape="round" style=" --background : #049F9D;color:white;" (click)="playAudio()">Play Audio</ion-button>
   <div class="button">
-    <ion-button shape="round" (click)="saveUserInfo()">Save</ion-button>
+    <ion-button shape="round" style=" --background : #049F9D;color:white;" (click)="saveUserInfo()">Save</ion-button>
   </div>
-</div>
+  </div>
 </ion-content>

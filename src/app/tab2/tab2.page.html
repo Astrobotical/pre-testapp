@@ -1,13 +1,13 @@
 <ion-content [fullscreen]="true">
- 
+  <div class="header">
+  </div>
   <div class="main-container"  *ngIf="showingDetails === false">
-
-  <select>
-    <option selected disabled>Select a time</option>
-    <option value="5"> Last 5 runs</option>
-    <option value="10"> Last 10 runs</option>
-    <option value="15"> Last 15 runs</option>
-  </select>
+    <ion-select placeholder="Last 5 runs" [(ngModel)]="selectedFilter" (ionChange)="filterTime()" class="--ion-text-color: white;" interface="popover">
+      <ion-select-option value="5">Last 5 runs</ion-select-option>
+      <ion-select-option value="10">Last 10 runs</ion-select-option>
+      <ion-select-option value="15">Last 15 runs</ion-select-option>
+      <ion-select-option value="20">Last 20 runs</ion-select-option>
+    </ion-select>
 
   <div *ngFor="let value of Data">
     <div class="container" id="maincontain" (click)="raceDetails(value)">
@@ -22,15 +22,73 @@
   </div>
   </div>
   <div class="sub-container" [style.display]="showingDetails ? 'block' : 'none'">
-    <div class="row">
-      <ion-icon name="chevron-back-outline" (click)="goBack()"></ion-icon>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-icon name="chevron-back-outline" color="white" (click)="goBack()"></ion-icon>
+        </ion-buttons>
+        <ion-title>
+          Run Details
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <div class="sub-header">
+    
       <h4> Date : {{formatDate(selectedItem.date)}}</h4>
       <h4> Run Type - {{selectedItem.type}}</h4>
     </div>
     <ion-card>
       <ion-card-content>
-        <canvas #lineCanvas style="position: relative; height:20vh; width:40vw"></canvas>
+        <div>
+        <canvas #lineCanvas style="position: relative; height:20vh; width:40vw; background-color: white;"></canvas>
+      </div>
       </ion-card-content>
     </ion-card>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Distance</ion-card-title>
+            </ion-card-header>
+           <ion-card-content> 
+              <h2> 2.8 miles</h2>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Time</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <h2>31:27 minutes</h2>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Calories</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <h2> 330 calories</h2>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Average Speed</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <h2> 5.3 mph</h2>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 </ion-content>

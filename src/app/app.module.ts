@@ -9,6 +9,8 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import {Drivers} from '@ionic/storage';
 import {StorageService} from 'src/app/services/storage.service';
+import 'promise-polyfill/src/polyfill';
+
 
 @NgModule({
   schemas: [

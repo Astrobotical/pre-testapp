@@ -1,3 +1,75 @@
 <ion-content [fullscreen]="true">
-  <h2>Tab 1</h2>
+  <div class="container">
+    <div class="header">
+      <h1>Welcome Back, {{ userName }}!</h1>
+    </div>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Yearly Goal</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+       <h1> {{userYearlyGoal}} Km</h1>
+       <ion-progress-bar max="250" value="0.6"></ion-progress-bar>
+       <div class="progress-description">
+          <p>Progress : {{userPercentage}}% ran  {{userMiles}} Km's / {{userYearlyGoal}} Km's</p>
+       </div>
+        </ion-card-content>
+    </ion-card>
+    <div class="box">
+      <h2>Get the Daily in!</h2>
+      <ion-label>Choose your daily goal</ion-label>
+      <ion-select class="--ion-text-color: white;" placeholder="Select a goal" [(ngModel)]="userYearlyGoal" (ionChange)="setGoal()" style="color:white;" interface="popover">
+        <ion-select-option value="100" class="color: white;">5 Km</ion-select-option>
+        <ion-select-option value="200">10 Km</ion-select-option>
+      </ion-select>
+       <ion-label>Choose your tracer wristband</ion-label>
+      <ion-select placeholder="Select a tracer wristband" [(ngModel)]="userWristband" (ionChange)="setWristband()"  interface="popover">
+        <ion-select-option value="1">Pablo's tracer v2</ion-select-option>
+        <ion-select-option value="2">Pablo's traver v1</ion-select-option>
+      </ion-select>
+      <ion-row>
+        <ion-button shape="round" color="medium" (click)="setUserDailyFeat()">Sync </ion-button>
+        <ion-button shape="round" style=" --background : #049F9D; color:white;" (click)="upload()">upload Data</ion-button>
+      </ion-row>
+    </div>
+    <div class="previous-runs">
+      <div class="row">
+        <ion-text style="font-size: 20px;">Previous Runs</ion-text>
+      <ion-text style="font-size: 20px;" (click)="getPreviousRuns()">View All</ion-text>
+      </div>
+      <div class="row-item">
+        <div>
+        <ion-text>5KM</ion-text>
+        </div>
+        <div>
+        <ion-text>2h:30mins</ion-text>
+        </div>
+        <div>
+        <ion-text>Jan 3, 2024</ion-text>
+      </div>
+      </div>
+          <div class="row-item">
+            <div>
+            <ion-text>5KM</ion-text>
+            </div>
+            <div>
+            <ion-text>2h:30mins</ion-text>
+            </div>
+            <div>
+            <ion-text>Jan 5, 2024</ion-text>
+            </div>
+      </div>
+      </div>
+      <div class="row-item">
+        <div>
+        <ion-text>10KM</ion-text>
+        </div>
+        <div>
+        <ion-text>4h:30mins</ion-text>
+        </div>
+        <div>
+        <ion-text>Jan 6, 2024</ion-text>
+        </div>
+  </div>
+  </div>
 </ion-content>

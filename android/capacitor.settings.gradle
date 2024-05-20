@@ -2,6 +2,15 @@
 include ':capacitor-android'
 project(':capacitor-android').projectDir = new File('../node_modules/@capacitor/android/capacitor')
 
+include ':capacitor-community-media'
+project(':capacitor-community-media').projectDir = new File('../node_modules/@capacitor-community/media/android')
+
+include ':capacitor-community-native-audio'
+project(':capacitor-community-native-audio').projectDir = new File('../node_modules/@capacitor-community/native-audio/android')
+
+include ':capacitor-community-sqlite'
+project(':capacitor-community-sqlite').projectDir = new File('../node_modules/@capacitor-community/sqlite/android')
+
 include ':capacitor-app'
 project(':capacitor-app').projectDir = new File('../node_modules/@capacitor/app/android')
 
@@ -16,3 +25,6 @@ project(':capacitor-preferences').projectDir = new File('../node_modules/@capaci
 
 include ':capacitor-status-bar'
 project(':capacitor-status-bar').projectDir = new File('../node_modules/@capacitor/status-bar/android')
+
+include ':capacitor-native-biometric'
+project(':capacitor-native-biometric').projectDir = new File('../node_modules/capacitor-native-biometric/android')

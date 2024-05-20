@@ -1,2 +1,122 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+/* Ionic Variables and Theming
+ * ---------------------------------------------------------------
+ * Any overrides to theme variables should be placed in this file.
+ * For more information, please see:
+ * http://ionicframework.com/docs/theming/
+ */
+
+/* This sets a different item border color for the default theme on ios and md */
+:root {
+    --ion-item-border-color: var(--ion-background-color-step-200);
+    --ion-safe-area-bottom: 14px;
+    --ion-button-color:#99ccff;
+    --ion-text-color: red;
+    --ion-header-color:yellow;
+    --ion-background-color: #f0f0f0;
+  }
+  
+  /* This sets a different background and item background for the default theme on ios */
+  :root.ios {
+    --ion-background-color: var(--ion-background-color-step-50, #f2f2f6);
+    --ion-toolbar-background: var(--ion-background-color);
+    --ion-item-background: #fff;
+    --ion-safe-area-top : -1 !important;
+    --ion-safe-area-bottom: 10px;
+    --ion-text-color:blue;
+    --ion-header-color:green;
+
+    .header{
+      margin-top:20%;
+    }
+    --ion-background-color: #0559C6;
+    --ion-toolbar-background: var(--ion-background-color);
+    --ion-text-color:#F4F7FB;
+    --ion-header-color:#F4F7FB;
+    ion-card-title{
+      color:#F4F7FB;
+    }
+    ion-header{
+      color:#F4F7FB;
+    }
+    h1{
+      color:#F4F7FB;
+    }
+    ion-text{
+      color:#F4F7FB;
+    }
+    p{
+      color:#F4F7FB;
+    }
+  }
+  
+  /* This sets a different background and item background for the default theme on md */
+  :root.md {
+    --ion-background-color: #0559C6;
+    --ion-toolbar-background: var(--ion-background-color);
+    --ion-text-color:#F4F7FB;
+    --ion-header-color:#F4F7FB;
+    ion-card-title{
+      color:#F4F7FB;
+    }
+    ion-header{
+      color:#F4F7FB;
+    }
+    h1{
+      color:#F4F7FB;
+    }
+    ion-text{
+      color:#F4F7FB;
+    }
+    p{
+      color:#F4F7FB;
+    }
+  }
+  ;
+  /* This sets a different item background when dark mode is enabled on ios and md */
+  .ion-palette-dark.ios,
+  .ion-palette-dark.md {
+    --ion-text-color: red;
+    --ion-background-color: yellow;
+
+    ion-header{
+      color: green;
+    }
+    .primaryBtn{
+      color: #99ccff;
+
+    }
+    .secondaryBtn{
+      color: #51b355;
+
+    }
+    .accent{
+      color:#ff9900;
+    }
+    .text{
+      color : #e2f8e4;
+    }
+    --ion-item-background: #1c1c1d;
+  }
+  .ion-palette-light.ios,
+  .ion-palette-light.md {
+    --ion-text-color: #071d09;
+    --ion-background-color: #f2f2f6;
+
+    .primaryBtn{
+      --color : #003366;
+
+    }
+    .secondaryBtn{
+      color: #4cae4f
+
+    }
+    .accent{
+      color:#ff9500;
+    }
+    .text{
+      color : #071d09;
+    }
+    --ion-item-background: #f0f0f0;
+  }
