@@ -52,7 +52,7 @@ export class SigninPage implements OnInit {
     }else{
       console.log('was remembered')
       this.rememberMe = true;
-      //this.wasRemembered = true;
+      this.wasRemembered = true;
       this.email = await this.storage.get('email');
       console.log(`Preference was set,${this.rememberMe}`);
     }

@@ -19,9 +19,10 @@ export class Tab1Page implements OnInit{
         this.currentUser = data;
         this.userName = this.currentUser.user_FirstName;
         this.userYearlyGoal = data.userYearlyGoal;
-     
-          this.promptSetGoal();
-        
+        this.promptSetGoal();
+        if(this.currentUser.user_Height == 0 || this.currentUser.user_Weight == 0){
+          this.promptSetHeightnWeight();
+        }
         this.userMiles = data.userMiles;
         this.userPercentage = data.userPercentage;
         this.userWristband = data.userWristband;
@@ -97,6 +98,7 @@ export class Tab1Page implements OnInit{
               icon: "success",
               title: "Height and Weight Set!"
             });
+            this.sharedData.setData("user", this.currentUser);
             this.datasource.updateUser(this.currentUser);
           },
           cssClass: 'custom-alert-button',
