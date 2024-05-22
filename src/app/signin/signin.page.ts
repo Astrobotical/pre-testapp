@@ -7,39 +7,54 @@ import { StorageService } from '../services/storage.service';
 import { NativeBiometric, BiometryType } from "capacitor-native-biometric";
 import { User } from '../models/user.model';
 import { NavController } from '@ionic/angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { timeout } from 'rxjs';
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.page.html',
   styleUrls: ['./signin.page.scss'],
 })
-export class SigninPage {
-  constructor(private navCtrl:NavController,private router:Router, private storage: StorageService,private datasource:DatabaseServiceService ) {
+export class SigninPage implements OnInit {
+  constructor(private navCtrl:NavController,private router:Router, private storage: StorageService,private datasource:DatabaseServiceService,private formBuilder: FormBuilder) {
     this.initGetPreferences();
+  }
+  ngOnInit() {
+    this.signIn = this.formBuilder.group({
+      Email: ['', [Validators.required, Validators.email]],
+      Password: ['', [Validators.required]]
+    });
   }
   email: string = "";
   password: string = "";
   showPassword: boolean = false;
   rememberMe: boolean = false;
   wasRemembered: boolean = false; 
+  isLoading = false;
+  signIn: FormGroup = new FormGroup({});
+
   togglePassword(){
     this.showPassword = !this.showPassword;
   }
    setPreferences = async () => {
     !this.rememberMe;
-
     console.log(`Preference was set,${this.rememberMe}`);
+    if(this.rememberMe == true){
+    await this.storage.set('email', this.email);
+    }
     await this.storage.set('RememberMe', this.rememberMe.toString());
   };
+
   async initGetPreferences(){
-    if(await this.storage.get('RememberMe') != ''){
+    if(await this.storage.get('RememberMe') == ''){
       console.log('was not remembered')
       this.checkRememberMe();
     }else{
-      console.log('was  remembered')
+      console.log('was remembered')
       this.rememberMe = true;
-      this.wasRemembered = true;
+      //this.wasRemembered = true;
+      this.email = await this.storage.get('email');
       console.log(`Preference was set,${this.rememberMe}`);
-      //this.setPreferences();
     }
   }
    checkRememberMe = async () => {
@@ -48,7 +63,7 @@ export class SigninPage {
       case 'true':
         this.wasRemembered = true;
         if(this.wasRemembered == true){
-         // this.router.navigate(['tabs']);
+          this.rememberMe = true;
         } 
         break;
       case 'false':
@@ -59,7 +74,6 @@ export class SigninPage {
         this.wasRemembered = false;
         break;
     }
-  
   };
   
   removeRememberMe = async () => {
@@ -73,12 +87,12 @@ export class SigninPage {
     const isFaceID = result.biometryType == BiometryType.FACE_ID;
   
     const verified = await NativeBiometric.verifyIdentity({
-      reason: "For easy log in",
+      reason: "Login without a password",
       title: "Log in",
       subtitle: "Maybe add subtitle here?",
       description: "Maybe a description too?",
     })
-      .then(() => this.userSignIn())
+      .then(() => this.userBiometricSignIn())
       .catch(() => false);
   
     if(!verified) return;
@@ -88,27 +102,47 @@ export class SigninPage {
     });
   }
   
-  // Save user's credentials
-  savedCredentials(){
-  NativeBiometric.setCredentials({
-    username: "username",
-    password: "password",
-    server: "www.example.com",
-  }).then();
-}
-  
-  // Delete user's credentials
-  deleteCreds(){
-  NativeBiometric.deleteCredentials({
-    server: "www.example.com",
-  }).then();
-  }
   async userSignIn(){
     console.log('userSignIn method called'); 
     let user = new User(0, "", "", "", "", "", 0, 0);
-    user.user_Email = this.email;
-    user.user_Password = this.password;
-    await this.datasource.getUser(user).then
+    user.user_Email = this.signIn.get('Email')?.value;
+    user.user_Password = this.signIn.get('Password')?.value;
+   // console.log('User', user);
+    this.isLoading = true;
+    if (this.signIn.valid) {
+      console.log(this.signIn.value);
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 3000);
+  
+      await this.datasource.getUser(user).then
+      (user => {
+        console.log('User', user);
+        const urlParams : NavigationExtras = {
+          queryParams: {
+            user: JSON.stringify(user)
+          }
+        };
+        timeout(2000);
+        this.router.navigate(['/tabs'],urlParams);
+      }
+    );
+    } else {
+      console.log("Form is invalid");
+    
+      // Print detailed status of each control
+      Object.keys(this.signIn.controls).forEach(key => {
+        const control = this.signIn.get(key);
+        console.log(key + ' status: ' + control?.status);
+        console.log(key + ' value: ' + control?.value);
+        console.log(key + ' errors: ' + JSON.stringify(control?.errors));
+      });
+    }
+    // Simulate a login process with a delay
+    
+}
+  async userBiometricSignIn(){
+   this.datasource.getUserByEmail(this.email).then
     (user => {
       console.log('User', user);
       const urlParams : NavigationExtras = {
@@ -117,14 +151,7 @@ export class SigninPage {
         }
       };
       this.router.navigate(['/tabs'],urlParams);
-    }
-  );
-  }
-
-  userSignUp(){
-    console.log('userSignUp method called');
-
-    this.router.navigateByUrl('/signup');
+    });
   }
   userGoback(){
     console.log('userGoback method called');

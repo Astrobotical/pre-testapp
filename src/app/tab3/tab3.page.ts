@@ -1,16 +1,23 @@
+import { SharedService } from './../shared.service';
 import { User } from './../models/user.model';
 import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Media } from "@capacitor-community/media";
 import {NativeAudio} from '@capacitor-community/native-audio';
 import { Howl  } from 'howler';
+import { DatabaseServiceService } from '../services/database-service.service';
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-  constructor() {
+  constructor(private SharedService: SharedService,private datasource:DatabaseServiceService) {
+    this.SharedService.getData("user").subscribe(
+      (data) => {
+        this.User = data;
+      }
+    );
   }
   User: User = new User(0, "", "", "", "", "", 0, 0);
   
@@ -39,8 +46,6 @@ export class Tab3Page {
       icon: "success",
       title: "Profile Updated!"
     });
-    console.log(this.User.user_FirstName);
-    console.log(this.User.user_LastName);
-    console.log(this.User.user_Email);
+    this.datasource.updateUser(this.User);
   }
 }

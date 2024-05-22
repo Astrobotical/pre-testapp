@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^17.0.2",
     "@angular/router": "^17.0.2",
     "@awesome-cordova-plugins/ble": "^6.7.0",
+    "@capacitor-community/bluetooth-le": "^6.0.0",
     "@capacitor-community/media": "^6.0.0",
     "@capacitor-community/native-audio": "^5.0.1",
     "@capacitor-community/sqlite": "^5.7.3-3",

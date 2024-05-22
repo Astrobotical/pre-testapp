@@ -10,7 +10,7 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import {Drivers} from '@ionic/storage';
 import {StorageService} from 'src/app/services/storage.service';
 import 'promise-polyfill/src/polyfill';
-
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   schemas: [
@@ -19,6 +19,7 @@ import 'promise-polyfill/src/polyfill';
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), 
     AppRoutingModule, FontAwesomeModule,
+    SweetAlert2Module.forRoot(),
     IonicStorageModule.forRoot({name: '__mydb', driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage]}),
   
   ],

@@ -3,6 +3,8 @@ PODS:
     - CapacitorCordova
   - CapacitorApp (6.0.0):
     - Capacitor
+  - CapacitorCommunityBluetoothLe (6.0.0):
+    - Capacitor
   - CapacitorCommunityMedia (6.0.0):
     - Capacitor
     - SDWebImage
@@ -38,6 +40,7 @@ PODS:
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
+  - "CapacitorCommunityBluetoothLe (from `../../node_modules/@capacitor-community/bluetooth-le`)"
   - "CapacitorCommunityMedia (from `../../node_modules/@capacitor-community/media`)"
   - "CapacitorCommunityNativeAudio (from `../../node_modules/@capacitor-community/native-audio`)"
   - "CapacitorCommunitySqlite (from `../../node_modules/@capacitor-community/sqlite`)"
@@ -60,6 +63,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorApp:
     :path: "../../node_modules/@capacitor/app"
+  CapacitorCommunityBluetoothLe:
+    :path: "../../node_modules/@capacitor-community/bluetooth-le"
   CapacitorCommunityMedia:
     :path: "../../node_modules/@capacitor-community/media"
   CapacitorCommunityNativeAudio:
@@ -84,6 +89,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Capacitor: 559d073c4ca6c27f8e7002c807eea94c3ba435a9
   CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
+  CapacitorCommunityBluetoothLe: 53eb347a559c15b0e6ff6b83ee383ed6b0825b6a
   CapacitorCommunityMedia: 51cc6c8782b92cf622d9644cac37ae024fafb377
   CapacitorCommunityNativeAudio: 1a4d5490acb59f155602c0b6bcf1b42ee4efe91b
   CapacitorCommunitySqlite: 51e28e15b178468ff8761d4ac21feaf074b6c125
@@ -98,6 +104,6 @@ SPEC CHECKSUMS:
   SQLCipher: 5e6bfb47323635c8b657b1b27d25c5f1baf63bf5
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
 
-PODFILE CHECKSUM: e9a307fa8f801d5e4667fd9b03ce4897cc0ccb76
+PODFILE CHECKSUM: 5cd7d7e8ce14978989c5ab68221b7dcfdb57fdd8
 
 COCOAPODS: 1.15.2

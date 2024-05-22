@@ -2,7 +2,7 @@
   <div class="header">
   </div>
   <div class="main-container"  *ngIf="showingDetails === false">
-    <ion-select placeholder="Last 5 runs" [(ngModel)]="selectedFilter" (ionChange)="filterTime()" class="--ion-text-color: white;" interface="popover">
+    <ion-select placeholder="Last 5 runs" [(ngModel)]="selectedFilter" (ionChange)="filterTime()"  [interfaceOptions]="{ cssClass: 'custom-popover' }"interface="popover">
       <ion-select-option value="5">Last 5 runs</ion-select-option>
       <ion-select-option value="10">Last 10 runs</ion-select-option>
       <ion-select-option value="15">Last 15 runs</ion-select-option>

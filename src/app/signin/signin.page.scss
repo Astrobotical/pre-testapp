@@ -67,4 +67,9 @@ p{
     font-size: 40px;
     justify-self: start;
     margin-left:15px;
-}    
+}
+.custom-spinner {
+    --inner-stroke-width: 5px; /* Adjust the inner stroke width */
+    --outer-stroke-width: 5px; /* Adjust the outer stroke width */
+    --spinner-size: 100px; /* Adjust the spinner size */
+}

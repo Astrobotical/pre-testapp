@@ -7,61 +7,67 @@ import SwiperCore, { Swiper } from 'swiper';
 import { SwiperOptions } from 'swiper/types';
 import { DatabaseServiceService } from '../services/database-service.service';
 import { StorageService } from '../services/storage.service';
+import { timeout } from 'rxjs';
 @Component({
   selector: 'app-onboarding',
   templateUrl: './onboarding.page.html',
   styleUrls: ['./onboarding.page.scss'],
 })
-export class OnboardingPage implements OnInit{
+export class OnboardingPage implements OnInit {
 
   @ViewChild('swiperRef', { static: true })
   private _swiperRef: ElementRef | undefined;
   swiper?: Swiper
   SwiperModule = [IonicSlides];
- 
- 
-  constructor(private route: Router, private storage: StorageService ) { 
+
+
+  constructor(private route: Router, private storage: StorageService) {
     this.onBoardingAlter();
   }
   ngOnInit() {
     this.gotolanding();
   }
-  async gotolanding(){
-    if(await this.storage.get('Onboarding') != '' ){
-      this.route.navigate(['landingpage']);
-    }
+  async gotolanding() {
+    await this.storage.get('Onboarding')?.then(
+      (value) => {
+        if (value == 'true') {
+          this.route.navigate(['landingpage']);
+        }
+      }
+    );
+    timeout(3000)
     this.storage.set('Onboarding', 'true');
   }
-  onSliderInit(){
+  onSliderInit() {
     this.swiper = this._swiperRef?.nativeElement.swiper;
 
   }
-  nextSlide(){
+  nextSlide() {
     this.swiper?.slideNext();
   }
-  
-  skipOnboarding(){
+
+  skipOnboarding() {
     this.route.navigate(['landingpage']);
-  } 
+  }
   onBoardingAlter() {
     let totalSlides = this.swiper?.slides.length;
     let currentSlide = 1;
-    if(totalSlides != 0 ){
-    const interval = setInterval(() => {
-      console.log(currentSlide);
-      this.swiper?.slideTo(currentSlide);
-   
-      if (currentSlide === 3) {
-        clearInterval(interval);
-          this.route.navigate(['landingpage']);
-      }
-      if(currentSlide < 4){
-        currentSlide++;
-      }
-    }, 2000);
+    if (totalSlides != 0) {
+      const interval = setInterval(() => {
+        console.log(currentSlide);
+        this.swiper?.slideTo(currentSlide);
 
-  }else{
-    console.log("No Slides Found");
+        if (currentSlide === 3) {
+          clearInterval(interval);
+          this.route.navigate(['landingpage']);
+        }
+        if (currentSlide < 4) {
+          currentSlide++;
+        }
+      }, 2000);
+
+    } else {
+      console.log("No Slides Found");
+    }
   }
-}
 }

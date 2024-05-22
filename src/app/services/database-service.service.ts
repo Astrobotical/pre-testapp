@@ -15,18 +15,23 @@ export class DatabaseServiceService {
   
     this.initializePlugin();
   }
-
   async initializePlugin() {
-    this.db = await this.sqlite.createConnection('my-db', false, 'no-encryption', 1,false);
-    await this.db.open();
-    const platform = Capacitor.getPlatform();
-    if (platform === 'ios' || platform === 'android') {
-      console.log('Initializing Capacitor SQLite Plugin')
-      
-     this.createDatabase();
-     this.db.open();
+    try {
+      const platform = Capacitor.getPlatform();
+      if (platform === 'ios' || platform === 'android') {
+        console.log('Initializing Capacitor SQLite Plugin');
+        this.db = await this.sqlite.createConnection('appdb', false, 'no-encryption', 1, false);
+        await this.db.open();
+        console.log('Database opened successfully');
+        await this.createDatabase();
+      } else {
+        console.warn('SQLite is not supported on this platform:', platform);
+      }
+    } catch (error) {
+      console.error('Error initializing plugin', error);
     }
   }
+
 
   async createDatabase() {
     if (this.sqlite) {
@@ -61,7 +66,8 @@ export class DatabaseServiceService {
             user_ID INTEGER,
             date TEXT,
             type TEXT,
-            speedData TEXT
+            speedData TEXT,
+            hasSynced INTEGER DEFAULT 0,
         );
     `);
 
@@ -93,6 +99,25 @@ export class DatabaseServiceService {
       }
       return wasSuccessful
   }
+  async getUserByEmail(Email:String): Promise<User | undefined>{
+    if (this.db) {
+      try {
+        const result = await this.db.query(
+          `SELECT * FROM Users WHERE user_Email = ?`,
+          [Email]
+        );
+        if (result.values!.length === 0) {
+          console.log('No user found');
+        }else{
+          const user = result.values![0];
+          return new User(user.user_ID, user.user_FirstName, user.user_LastName, user.user_Email, user.user_Password, user.user_Dob, user.user_Height, user.user_Weight);
+        }
+      } catch (error) {
+        console.error('Error getting user', error);
+      }
+    }
+    return undefined;
+  }
   async getUser(currentUser:User): Promise<User | undefined>{
     if (this.db) {
       try {
@@ -100,10 +125,16 @@ export class DatabaseServiceService {
           `SELECT * FROM Users WHERE user_Email = ? AND user_Password = ?`,
           [currentUser.user_Email, currentUser.user_Password]
         );
+        const getall = await this.db.query(
+          `SELECT * FROM Users`
+        ); 
+
         if (result.values!.length === 0) {
           console.log('No user found');
+          console.log(getall.values);
         }else{
           const user = result.values![0];
+          console.log(user);
           return new User(user.user_ID, user.user_FirstName, user.user_LastName, user.user_Email, user.user_Password, user.user_Dob, user.user_Height, user.user_Weight);
         }
       } catch (error) {

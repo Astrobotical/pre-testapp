@@ -72,6 +72,12 @@
     p{
       color:#F4F7FB;
     }
+    ion-popover{
+      --background: #049F9D;
+      background: green;
+      color:black;
+      --color:black;
+  }
   }
   ;
   /* This sets a different item background when dark mode is enabled on ios and md */

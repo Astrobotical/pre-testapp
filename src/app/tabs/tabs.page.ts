@@ -1,8 +1,10 @@
+import { SharedService } from './../shared.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faHome, faWalking,faUser} from '@fortawesome/free-solid-svg-icons';
 import { User } from '../models/user.model';
 import { NavController } from '@ionic/angular';
+import {Subject} from 'rxjs';
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
@@ -14,11 +16,12 @@ export class TabsPage {
   faUser = faUser;
   tab:number  = 1;
   loggedInUser:User = new User(0, "", "", "", "", "", 0, 0);
-  constructor(private navCtrl:NavController,private router:Router,private route:ActivatedRoute) {
+  constructor(private navCtrl:NavController,private router:Router,private route:ActivatedRoute,private sharedService :SharedService) {
     this.route.queryParams.subscribe(params => {
       if (params && params['user']) {
         this.loggedInUser = JSON.parse(params['user']);
-        console.log(params['user']);
+        this.sharedService.setData('user',this.loggedInUser);
+       // console.log(params['user']);
       }
     }
     );
