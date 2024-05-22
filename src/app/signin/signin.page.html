@@ -1,0 +1,45 @@
+<ion-content [fullscreen]="true" >
+  <div class="header" >
+    <ion-icon class="back" name="arrow-back-outline" (click)="userGoback()" ></ion-icon>
+  </div>
+  <div class="form-welcome">
+    <h1>Sign In </h1>
+    <p style="color:white;">Fill in the form below to login.</p>
+  </div>
+  
+  <div class="form-container">
+    <form name="signup" [formGroup]="signIn" (ngSubmit)="userSignIn()" >
+    <div class="form-item">
+      <ion-input type="email" labelPlacement="stacked" placeholder="Enter your email" name="Email" label-placement="floating" formControlName="Email"  errorText="" required="true">
+        <ion-icon slot="start" name="mail-outline" aria-hidden="true"></ion-icon>
+      </ion-input>
+      <ion-note *ngIf="signIn.get('Email')?.invalid && signIn.get('Email')?.touched" color="danger">
+        Please enter your email
+      </ion-note>
+    </div>
+    <div class="form-item">
+      <ion-input color="white" [type]="showPassword ? 'text':'password'" name="Password" labelPlacement="stacked" placeholder="Enter your password" label-placement="floating"  formControlName="Password">
+        <ion-icon slot="start" name="lock-closed-outline" aria-hidden="true"></ion-icon>
+        <ion-icon slot="end" [name]="showPassword ? 'eye-outline': 'eye-off-outline'"(click)="togglePassword()" aria-hidden="true"></ion-icon>
+      </ion-input>
+        <ion-note *ngIf="signIn.get('Password')?.invalid && signIn.get('Password')?.touched" color="danger">
+          Password is required
+        </ion-note>
+    </div>
+    <div class="form-item">
+      <ion-checkbox slot="start" [checked]="rememberMe" name="rememberMe" (ngModelChange)="setPreferences() " ></ion-checkbox>
+      <ion-label style=" margin-left: 10px;">Remember me</ion-label>
+    </div> 
+ 
+  <div *ngIf="isLoading" align="center">
+    <ion-spinner name="dots" class="custom-spinner"></ion-spinner>
+  </div>
+  <ng-container *ngIf="wasRemembered && !isLoading">
+    <ion-button size="block" (click)="performBiometricVerificatin()">Sign in with FaceID</ion-button>
+  </ng-container>
+  <ng-container *ngIf="!wasRemembered && !isLoading">
+    <ion-button size="block" type="submit" >Sign in</ion-button>
+  </ng-container>
+</form> 
+  </div>
+  

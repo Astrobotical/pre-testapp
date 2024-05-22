@@ -33,5 +33,71 @@
  */
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.class.css"; 
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+@font-face {
+    font-family: 'Inter';
+    src:  url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap')
+}
+// ios bottom iphone x fixed
+body {
+    margin-top: constant(safe-area-inset-top);
+    color: #f0f0f0;
+  }
+  ion-button{
+    --color : #003366;
+
+  }
+  ion-tab-bar {
+    margin-bottom: constant(safe-area-inset-bottom);
+  }
+  /* Style for the popover background and text color */
+.custom-popover .popover-content {
+  --background: #049F9D; /* Background color of the popover */
+}
+
+/* Style for each option's background and text color */
+.custom-popover ion-item {
+  --background: #049F9D; /* Background color of each option */
+  color: white; /* Text color */
+}
+
+/* Ensure the text color within ion-item */
+.custom-popover ion-item ion-label {
+  color: white; /* Text color */
+}
+ion-alert.custom-alert {
+  --backdrop-opacity: 0.3;
+  --background: #049F9D;
+}
+
+.custom-alert .alert-button-group {
+  padding: 8px;
+}
+.custom-alert-button{
+  color:white !important;
+}
+button.alert-button.alert-button-confirm {
+  background-color: white;
+  color: #049F9D;
+}
+
+.md button.alert-button.alert-button-confirm {
+  border-radius: 4px;
+}
+
+.ios .custom-alert button.alert-button {
+  border: 0.55px solid rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.2);
+}
+
+.ios button.alert-button.alert-button-cancel {
+  border-right: 0;
+  border-bottom-left-radius: 13px;
+  border-top-left-radius: 13px;
+}
+
+.ios button.alert-button.alert-button-confirm {
+  border-bottom-right-radius: 13px;
+  border-top-right-radius: 13px;
+}

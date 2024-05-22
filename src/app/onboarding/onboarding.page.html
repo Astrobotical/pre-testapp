@@ -1,0 +1,42 @@
+<ion-content [fullscreen]="true">
+  <div class="header">
+    <ion-toolbar fill="clear">
+      <ion-buttons slot="start" fill="clear">
+        <ion-button  (click)="nextSlide()"></ion-button>
+        <ion-icon name="chevron-back" slot="icon-only"></ion-icon>
+        </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="skipOnboarding()" fill="clear">Skip</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
+  <swiper-container #swiperRef
+  [afterinit]="onSliderInit()" 
+  [pagination]="true" 
+  >
+      <swiper-slide>
+        <img src="./assets/imgs/1runner.png">
+        <div class="boarding">
+        <h2>Welcome to Tracer</h2>
+        <p>Tracer takes your running to the next level. Track every step, heartbeat, and mile. Your journey to excellence starts here.</p>
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <img src="./assets/imgs/3runner.png" alt="onboarding3">
+        <div class="boarding">
+        <h2>Set Your Goals, Smash Your Limits</h2>
+        <p>Set your goals and watch yourself achieve them. Track your progress and stay motivated with Tracer, your key to reaching new heights.</p>
+      </div>
+      </swiper-slide>
+      <swiper-slide>
+        <img src="./assets/imgs/2runner.png" alt="onboarding2">
+        <div class="boarding">
+        <h2>Analyze, Improve, Excel</h2>
+        <p>Get in-depth analysis of your runs to help you improve. Each run brings you closer to your best self with Tracer.</p>
+     </div>
+      </swiper-slide>
+    
+
+    <div class="swiper-pagination"></div>
+  </swiper-container>
+</ion-content>

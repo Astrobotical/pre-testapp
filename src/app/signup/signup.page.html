@@ -1,0 +1,161 @@
+<ion-content [fullscreen]="true">
+  <div class="header">
+    <ion-header class="ion-no-border">
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-icon
+            name="arrow-back-outline"
+            routerLink="/landingpage"
+          ></ion-icon>
+        </ion-buttons>
+        <ion-title class="ion-text-center">
+          <h1>Register</h1>
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </div>
+  <div class="form-welcome">
+    <p style="color: white">Fill in the form below to create an account</p>
+  </div>
+  <form class="form-container" [formGroup]="signUp" (ngSubmit)="submitformData()">
+    <div class="row top">
+      <div class="form-item">
+        <div class="label">
+          <ion-label> First Name </ion-label>
+        </div>
+        <ion-input
+          type="text"
+          labelPlacement="stacked"
+          placeholder="Enter your given name"
+          formControlName="user_FirstName"
+          name="Firstname"
+          label-placement="floating"
+          errorText=""
+          required
+        >
+          <ion-icon
+            slot="start"
+            name="person-outline"
+            style="margin-left:15px;"
+            aria-hidden="true"
+          ></ion-icon>
+        </ion-input>
+        <ion-note color="danger" *ngIf="signUp.get('user_FirstName')?.invalid && signUp.get('user_FirstName')?.touched" class="error-message">
+          First name is required
+        </ion-note>
+            </div>
+            <div class="form-item">
+        <div class="label">
+          <ion-label> Last Name </ion-label>
+        </div>
+        <ion-input
+          type="text"
+          labelPlacement="stacked"
+          placeholder="Enter your surname"
+          formControlName="user_LastName"
+          name="Lastname"
+          label-placement="floating"
+          errorText=""
+          required
+        >
+          <ion-icon
+            slot="start"
+            style="margin-left:15px;"
+            name="person-outline"
+            aria-hidden="true"
+          ></ion-icon>
+        </ion-input>
+        <ion-note color="danger" *ngIf="signUp.get('user_LastName')?.invalid && signUp.get('user_LastName')?.touched" class="error-message">
+          Last name is required
+        </ion-note>
+            </div>
+          </div>
+          <div class="bottom">
+            <div class="form-item">
+        <div class="label">
+          <ion-label> Password </ion-label>
+        </div>
+        <ion-input
+          type="password"
+          labelPlacement="stacked"
+          placeholder="Enter your password"
+          label-placement="floating"
+          formControlName="user_Password"
+          name="Password"
+          required
+        >
+          <ion-icon
+            slot="start"
+            style="margin-left:15px;"
+            name="lock-closed-outline"
+            aria-hidden="true"
+          ></ion-icon>
+        </ion-input>
+        <ion-note color="danger" *ngIf="signUp.get('user_Password')?.invalid && signUp.get('user_Password')?.touched" class="error-message">
+          Password is required
+        </ion-note>
+            </div>
+
+            <div class="form-item">
+        <div class="label">
+          <ion-label> Confirm Password </ion-label>
+        </div>
+        <ion-input
+          [type]="showconfirmPassword ? 'text':'password'"
+          labelPlacement="stacked"
+          placeholder="Confirm your password"
+          label-placement="floating"
+          formControlName="user_ConfirmPassword"
+          name="ConfirmPassword"
+        >
+          <ion-icon
+            slot="end"
+            style="margin-right:15px;"
+            [name]="showconfirmPassword? 'eye-outline': 'eye-off-outline'"
+            (click)="toggleShowConfirmPassword()"
+            aria-hidden="true"
+          ></ion-icon>
+        </ion-input>
+        <ion-note color="danger" *ngIf="signUp.get('user_ConfirmPassword')?.invalid && signUp.get('user_ConfirmPassword')?.touched" class="error-message">
+          Confirm password is required
+        </ion-note>
+            </div>
+          </div>
+          <div class="form-item">
+            <div class="label">
+        <ion-label> Email Address </ion-label>
+            </div>
+            <ion-input
+        type="email"
+        labelPlacement="stacked"
+        placeholder="Email"
+        class="email"
+        formControlName="user_Email"
+        label-placement="floating"
+        errorText=""
+        required
+            >
+        <ion-icon
+          slot="start"
+          style="margin-left:15px;"
+          name="mail-outline"
+          aria-hidden="true"
+        ></ion-icon>
+            </ion-input>
+            <ion-note color="danger" *ngIf="signUp.get('user_Email')?.invalid && signUp.get('user_Email')?.touched" class="error-message">
+        Email is required
+      </ion-note>
+          </div>
+          <div class="form-item">
+            <div class="label">
+        <ion-label> Date of Birth</ion-label>
+            </div>
+            <ion-input label="Select DOB" type="date"formControlName='user_Dob' label-placement="floating" fill="outline" style="padding-left:15px; " ></ion-input>
+            <ion-note color="danger" *ngIf="signUp.get('user_DOB')?.invalid && signUp.get('user_DOB')?.touched" class="error-message">
+              </ion-note>
+              </div>
+    <ion-button expand="block" size="large" type="submit"
+      >Register</ion-button
+    >
+  </form>
+</ion-content>
