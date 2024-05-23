@@ -4,6 +4,7 @@ import { User } from '../models/user.model';
 import { DatabaseServiceService } from '../services/database-service.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, delay, of } from 'rxjs';
+import { AlertService } from '../alert.service';
 
 @Component({
   selector: 'app-signup',
@@ -11,11 +12,11 @@ import { Observable, delay, of } from 'rxjs';
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage  {
-  user: User = new User(0, "", "", "", "", "", 0, 0);
+  user: User = new User(0, "", "", "", "", "", 0, 0,0,0);
   confirmedPassword: string = "";
   showconfirmPassword: boolean = false;
   signUp:FormGroup = new FormGroup({});
-  constructor(private router : Router, private datasource:DatabaseServiceService,private formBuilder: FormBuilder ) { 
+  constructor(private router : Router, private datasource:DatabaseServiceService,private alertService: AlertService,private formBuilder: FormBuilder ) { 
   this.signUp = this.formBuilder.group({
     user_FirstName: ['', Validators.required],
       user_LastName: ['', Validators.required],
@@ -32,25 +33,33 @@ export class SignupPage  {
   }
   redirectTologin(){
     this.router.navigate(['login']);
-    console.log("Redirect to login page");
   }
-  submitformData()
+  async submitformData()
   {
-
+   await this.alertService.presentSpinner("loading");
   if (this.signUp.valid) {
+    this.alertService.dismissSpinner();
     this.user.user_Dob = "2021-01-01"; // Example date
-    console.log("Form Submitted");
-    console.log(this.signUp.value);
     this.user.user_FirstName = this.signUp.get('user_FirstName')?.value;
     this.user.user_LastName = this.signUp.get('user_LastName')?.value;
     this.user.user_Email = this.signUp.get('user_Email')?.value;
     this.user.user_Password = this.signUp.get('user_Password')?.value;
     this.user.user_Dob = this.signUp.get('user_Dob')?.value;
-    console.log(this.user);
-        this.datasource.addUser(this.user);
-   this.redirectTologin();
+    await this.alertService.presentSpinner("Creating account...");
+        if(this.datasource.addUser(this.user) == undefined){
+          this.alertService.dismissSpinner();
+          this.alertService.failed("Unable to create account, please try again later");
+        }else{
+          this.alertService.dismissSpinner();
+          this.alertService.success("Account created successfully").then(() => {
+            this.redirectTologin();
+          } );
+        }
+   //this.redirectTologin();
     // Submit the form data to the server
   } else {
+    this.alertService.dismissSpinner();
+    this.alertService.failed("Please fill in all required fields");
     console.log("Form is invalid");
     
     // Print detailed status of each control

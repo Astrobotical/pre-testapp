@@ -20,7 +20,7 @@ export class DatabaseServiceService {
       const platform = Capacitor.getPlatform();
       if (platform === 'ios' || platform === 'android') {
         console.log('Initializing Capacitor SQLite Plugin');
-        this.db = await this.sqlite.createConnection('appdb', false, 'no-encryption', 1, false);
+        this.db = await this.sqlite.createConnection('mydb', false, 'no-encryption', 1, false);
         await this.db.open();
         console.log('Database opened successfully');
         await this.createDatabase();
@@ -39,13 +39,7 @@ export class DatabaseServiceService {
         //this.db = await this.sqlite.createConnection('my-db', false, 'no-encryption', 1,false);
         await this.db.open();
         console.log('Database created!');
-        
-        await this.db.execute(`
-          CREATE TABLE IF NOT EXISTS items (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT
-          );
-        `);
+
         //Creating the Users table if it does not exist
         await this.db.execute(`
         CREATE TABLE IF NOT EXISTS Users (
@@ -56,7 +50,9 @@ export class DatabaseServiceService {
           user_Password TEXT,
           user_Dob TEXT,
           user_Height REAL,
-          user_Weight REAL
+          user_Weight REAL,
+          user_YearlyGoal REAL,
+          user_Miles REAL
       );
         `);
         //Creating the RaceData table if it does not exist
@@ -83,9 +79,9 @@ export class DatabaseServiceService {
         console.log('Adding user', user);
         const result = 
         await this.db.run(
-          `INSERT INTO Users (user_FirstName, user_LastName, user_Email, user_Password, user_Dob, user_Height, user_Weight) 
-          VALUES ( ?, ?, ?, ?, ?, ?, ?)`,
-          [user.user_FirstName, user.user_LastName, user.user_Email, user.user_Password, user.user_Dob, user.user_Height, user.user_Weight]
+          `INSERT INTO Users (user_FirstName, user_LastName, user_Email, user_Password, user_Dob, user_Height, user_Weight, user_YearlyGoal, user_Miles) 
+          VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [user.user_FirstName, user.user_LastName, user.user_Email, user.user_Password, user.user_Dob, user.user_Height, user.user_Weight, user.user_YearlyGoal, user.user_Miles]
         );
         
         console.log('Result', result);
@@ -110,7 +106,7 @@ export class DatabaseServiceService {
           console.log('No user found');
         }else{
           const user = result.values![0];
-          return new User(user.user_ID, user.user_FirstName, user.user_LastName, user.user_Email, user.user_Password, user.user_Dob, user.user_Height, user.user_Weight);
+          return new User(user.user_ID, user.user_FirstName, user.user_LastName, user.user_Email, user.user_Password, user.user_Dob, user.user_Height, user.user_Weight,user.user_YearlyGoal,user.user_Miles);
         }
       } catch (error) {
         console.error('Error getting user', error);
@@ -135,7 +131,7 @@ export class DatabaseServiceService {
         }else{
           const user = result.values![0];
           console.log(user);
-          return new User(user.user_ID, user.user_FirstName, user.user_LastName, user.user_Email, user.user_Password, user.user_Dob, user.user_Height, user.user_Weight);
+          return new User(user.user_ID, user.user_FirstName, user.user_LastName, user.user_Email, user.user_Password, user.user_Dob, user.user_Height, user.user_Weight,user.user_YearlyGoal,user.user_Miles);
         }
       } catch (error) {
         console.error('Error getting user', error);
@@ -144,16 +140,24 @@ export class DatabaseServiceService {
     return undefined;
   }
   async updateUser(user:User) {
+    let tobereturned = false;
     if (this.db) {
       try {
-        await this.db.run(
+        
+       const result = await this.db.run(
           `UPDATE Users SET user_FirstName = ?, user_LastName = ?, user_Email = ?, user_Password = ?, user_Dob = ?, user_Height = ?, user_Weight = ? WHERE user_ID = ?`,
           [user.user_FirstName, user.user_LastName, user.user_Email, user.user_Password, user.user_Dob, user.user_Height, user.user_Weight, user.user_ID]
         );
+        if(result.changes!.changes === 1)
+          {
+            tobereturned = true;
+          }
+        return tobereturned = true;
       } catch (error) {
         console.error('Error updating user', error);
       }
     }
+    return tobereturned;
   }
   async getAllRacesByUser(user:User): Promise<RaceData[]>{
     let tobeReturned : RaceData[] = [];
@@ -185,6 +189,46 @@ export class DatabaseServiceService {
     }
     return tobeReturned;
   }
+  async addRaceData(raceData:RaceData){
+    let wasSuccessful = false;
+      try {
+        console.log('Adding raceData', raceData);
+        const result =
+        await this.db.run(
+          `INSERT INTO RaceData ( date, type, speedData) 
+          VALUES ( ?, ?, ?)`,
+          [ raceData.date, raceData.type, JSON.stringify(raceData.speedData)]
+        );
+        console.log('Result', result);
+        if(result.changes!.changes === 1){
+          wasSuccessful = true;
+        }
+      } catch (error) {
+        console.error('Error adding raceData', error);
+      }
+      return wasSuccessful
+  }
+  async getRaceDataById(id:number): Promise<RaceData | undefined>{
+    if (this.db) {
+      try {
+        const result = await this.db.query(
+          `SELECT * FROM RaceData WHERE id = ?`,
+          [id]
+        );
+        if (result.values!.length === 0) {
+          console.log('No raceData found');
+        }else
+        {
+          const raceData = result.values![0];
+          return new RaceData(raceData.id, raceData.date, raceData.type, SpeedData.fromJson(JSON.parse(raceData.speedData)));
+        }
+      } catch (error) {
+        console.error('Error getting raceData', error);
+      } 
+    }
+    return undefined;
+  }
+
   async closeConnection() {
     if (this.db) {
       await this.db.close();

@@ -1,8 +1,16 @@
 <ion-content [fullscreen]="true">
 <div class="header form-container">
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-title class="ion-text-center">
+        <h1>Profile</h1>
+      </ion-title>
+      <ion-buttons slot="end" (click)="playAudio()">
+        <ion-icon name="musical-notes-outline" ></ion-icon>
+      </ion-buttons>
+    </ion-toolbar>
+    </ion-header>
 
-  
-  <h2>Profile</h2>
   <div class="form-item">
     <ion-input label="First Name" type="text" [(ngModel)]="User.user_FirstName" label-placement="floating" fill="outline"></ion-input>
   </div>
@@ -15,38 +23,16 @@
   <div class="form-item">
     <ion-input label="Date of Birth" type="date" [(ngModel)]="User.user_Dob" label-placement="floating" fill="outline" ></ion-input>
   </div>
-  <div class="row">
   <div class="form-item">
-    <ion-input label="Height" type="number" label-placement="floating" fill="outline" placeholder="Please enter your height"[(ngModel)]="User.user_Height"></ion-input>
+    <ion-input label="Height in CM" type="number" label-placement="floating" fill="outline" placeholder="Please enter your height"[(ngModel)]="User.user_Height"></ion-input>
   </div>
-  <ion-segment value="all">
-    <ion-segment-button value="cm">
-      <ion-label>Cm</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="inches">
-      <ion-label>Inches</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="feet">
-      <ion-label>Feet</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-  </div>
-  <div class = "row">
+ 
   <div class="form-item">
-    <ion-input label="Weight" type="number" label-placement="floating" fill="outline" [(ngModel)]="User.user_Weight"></ion-input>
+    <ion-input label="Weight in LBS" type="number" label-placement="floating" fill="outline" [(ngModel)]="User.user_Weight"></ion-input>
+
   </div>
-  <ion-segment value="all">
-    <ion-segment-button value="kg">
-      <ion-label>Kg</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="lbs">
-      <ion-label>Lbs</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-  </div>
-  <ion-button shape="round" style=" --background : #049F9D;color:white;" (click)="playAudio()">Play Audio</ion-button>
   <div class="button">
     <ion-button shape="round" style=" --background : #049F9D;color:white;" (click)="saveUserInfo()">Save</ion-button>
   </div>
-  </div>
+</div>
 </ion-content>

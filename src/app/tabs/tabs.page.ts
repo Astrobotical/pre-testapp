@@ -15,7 +15,7 @@ export class TabsPage {
   faWalking = faWalking;
   faUser = faUser;
   tab:number  = 1;
-  loggedInUser:User = new User(0, "", "", "", "", "", 0, 0);
+  loggedInUser:User = new User(0, "", "", "", "", "", 0, 0,0,0);
   constructor(private navCtrl:NavController,private router:Router,private route:ActivatedRoute,private sharedService :SharedService) {
     this.route.queryParams.subscribe(params => {
       if (params && params['user']) {

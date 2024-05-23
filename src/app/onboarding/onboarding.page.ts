@@ -28,14 +28,9 @@ export class OnboardingPage implements OnInit {
     this.gotolanding();
   }
   async gotolanding() {
-    await this.storage.get('Onboarding')?.then(
-      (value) => {
-        if (value == 'true') {
-          this.route.navigate(['landingpage']);
-        }
-      }
-    );
-    timeout(3000)
+   if(await this.storage.get('Onboarding') == 'true'){
+      this.route.navigate(['landingpage']);
+    }
     this.storage.set('Onboarding', 'true');
   }
   onSliderInit() {
@@ -54,7 +49,7 @@ export class OnboardingPage implements OnInit {
     let currentSlide = 1;
     if (totalSlides != 0) {
       const interval = setInterval(() => {
-        console.log(currentSlide);
+        //console.log(currentSlide);
         this.swiper?.slideTo(currentSlide);
 
         if (currentSlide === 3) {

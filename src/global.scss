@@ -101,3 +101,16 @@ button.alert-button.alert-button-confirm {
   border-bottom-right-radius: 13px;
   border-top-right-radius: 13px;
 }
+ion-alert.alert-danger{
+  --background: #FF6347;
+}
+ion-alert.alert-success{
+  --background: #049F9D;
+}
+
+ion-loading.custom-loading {
+  --background: #e3edff;
+  --spinner-color: #049F9D;
+
+  color: #049F9D;
+}
