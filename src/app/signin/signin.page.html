@@ -16,6 +16,12 @@
       <ion-note *ngIf="signIn.get('Email')?.invalid && signIn.get('Email')?.touched" color="danger">
         Please enter your email
       </ion-note>
+      <div  *ngIf="signIn.get('Email')?.hasError('email') && signIn.get('Email')?.touched">
+      <br>
+        <ion-note color="danger">
+        Please enter a valid email
+      </ion-note>
+      </div>
     </div>
     <div class="form-item">
       <ion-input color="white" [type]="showPassword ? 'text':'password'" name="Password" labelPlacement="stacked" placeholder="Enter your password" label-placement="floating"  formControlName="Password">
@@ -25,12 +31,14 @@
         <ion-note *ngIf="signIn.get('Password')?.invalid && signIn.get('Password')?.touched" color="danger">
           Password is required
         </ion-note>
+        <ion-note *ngIf="signIn.get('Password')?.hasError('minlength') && signIn.get('Password')?.touched" color="danger">
+          Password must be at least 6 characters
+          </ion-note>
     </div>
     <div class="form-item">
       <ion-checkbox slot="start" [checked]="rememberMe" name="rememberMe" (ngModelChange)="setPreferences() " ></ion-checkbox>
       <ion-label style=" margin-left: 10px;">Remember me</ion-label>
     </div> 
- 
   <div *ngIf="isLoading" align="center">
     <ion-spinner name="dots" class="custom-spinner"></ion-spinner>
   </div>

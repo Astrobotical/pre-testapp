@@ -1,22 +1,20 @@
 import { DatabaseServiceService } from './../services/database-service.service';
 import { RequestRedirect } from './../../../node_modules/@firebase/auth-compat/node_modules/undici/types/fetch.d';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { Preferences } from '@capacitor/preferences';
 import { StorageService } from '../services/storage.service';
 import { NativeBiometric, BiometryType } from "capacitor-native-biometric";
 import { User } from '../models/user.model';
-import { NavController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import Swal from 'sweetalert2';
 import { timeout } from 'rxjs';
+import { AlertService } from './../alert.service';
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.page.html',
   styleUrls: ['./signin.page.scss'],
 })
 export class SigninPage implements OnInit {
-  constructor(private navCtrl:NavController,private router:Router, private storage: StorageService,private datasource:DatabaseServiceService,private formBuilder: FormBuilder) {
+  constructor(private ngZone:NgZone,private alertService: AlertService,private router:Router, private storage: StorageService,private datasource:DatabaseServiceService,private formBuilder: FormBuilder) {
     this.initGetPreferences();
   }
   ngOnInit() {
@@ -38,47 +36,26 @@ export class SigninPage implements OnInit {
   }
    setPreferences = async () => {
     !this.rememberMe;
-    console.log(`Preference was set,${this.rememberMe}`);
-    if(this.rememberMe == true){
-    await this.storage.set('email', this.email);
-    }
-    await this.storage.set('RememberMe', this.rememberMe.toString());
   };
 
   async initGetPreferences(){
-    if(await this.storage.get('RememberMe') == ''){
-      console.log('was not remembered')
-      this.checkRememberMe();
-    }else{
+    if(await this.storage.get('RememberMe') == '' || await this.storage.get('RememberMe') == 'false'){
+      this.rememberMe = false;
+      this.wasRemembered = false;
+    }
+    else if(await this.storage.get('RememberMe') == 'true'){
       console.log('was remembered')
       this.rememberMe = true;
-      //this.wasRemembered = true;
-      this.email = await this.storage.get('email');
-      console.log(`Preference was set,${this.rememberMe}`);
+      this.wasRemembered = true;
+      this.signIn.get("Email")?.setValue(await this.storage.get('email'));
     }
+    console.log(`Preference was set,${this.rememberMe}`);
   }
-   checkRememberMe = async () => {
-    const value = await this.storage.get('RememberMe');
-    switch (value) {
-      case 'true':
-        this.wasRemembered = true;
-        if(this.wasRemembered == true){
-          this.rememberMe = true;
-        } 
-        break;
-      case 'false':
-        this.wasRemembered = false;
-        console.log(`Hello ${value}!`);
-        break;
-      default:
-        this.wasRemembered = false;
-        break;
-    }
-  };
-  
+
   removeRememberMe = async () => {
     await this.storage.remove('RememberMe');
   };
+
   async performBiometricVerificatin(){
     const result = await NativeBiometric.isAvailable();
   
@@ -97,27 +74,33 @@ export class SigninPage implements OnInit {
   
     if(!verified) return;
   
-    const credentials = await NativeBiometric.getCredentials({
-      server: "www.example.com",
-    });
   }
   
   async userSignIn(){
-    console.log('userSignIn method called'); 
-    let user = new User(0, "", "", "", "", "", 0, 0);
+    let user = new User(0, "", "", "", "", "", 0, 0,0,0);
     user.user_Email = this.signIn.get('Email')?.value;
     user.user_Password = this.signIn.get('Password')?.value;
-   // console.log('User', user);
     this.isLoading = true;
+    await this.alertService.presentSpinner('Signing in ... ');
     if (this.signIn.valid) {
+      if(await this.datasource.getUser(user) == undefined){
+        this.isLoading = false;
+        this.alertService.dismissSpinner();
+        this.alertService.failed('User not found');
+        return;
+      }
       console.log(this.signIn.value);
       setTimeout(() => {
+        this.alertService.dismissSpinner();
         this.isLoading = false;
       }, 3000);
-  
+
+    if(this.rememberMe == true){
+      await this.storage.set('email', this.signIn.get('Email')?.value);
+      await this.storage.set('RememberMe', this.rememberMe.toString());
+    }
       await this.datasource.getUser(user).then
       (user => {
-        console.log('User', user);
         const urlParams : NavigationExtras = {
           queryParams: {
             user: JSON.stringify(user)
@@ -129,8 +112,9 @@ export class SigninPage implements OnInit {
     );
     } else {
       console.log("Form is invalid");
-    
-      // Print detailed status of each control
+      this.alertService.dismissSpinner();
+    await this.alertService.failed('Invalid email or password');
+    this.isLoading = false;
       Object.keys(this.signIn.controls).forEach(key => {
         const control = this.signIn.get(key);
         console.log(key + ' status: ' + control?.status);
@@ -138,11 +122,10 @@ export class SigninPage implements OnInit {
         console.log(key + ' errors: ' + JSON.stringify(control?.errors));
       });
     }
-    // Simulate a login process with a delay
-    
 }
   async userBiometricSignIn(){
-   this.datasource.getUserByEmail(this.email).then
+    const userEmail = await this.storage.get('email');
+    this.datasource.getUserByEmail(userEmail).then
     (user => {
       console.log('User', user);
       const urlParams : NavigationExtras = {
@@ -154,7 +137,6 @@ export class SigninPage implements OnInit {
     });
   }
   userGoback(){
-    console.log('userGoback method called');
     this.router.navigateByUrl('/landingpage');
   }
 }

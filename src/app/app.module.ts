@@ -11,6 +11,7 @@ import {Drivers} from '@ionic/storage';
 import {StorageService} from 'src/app/services/storage.service';
 import 'promise-polyfill/src/polyfill';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { User } from './models/user.model';
 
 @NgModule({
   schemas: [
@@ -21,8 +22,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     AppRoutingModule, FontAwesomeModule,
     SweetAlert2Module.forRoot(),
     IonicStorageModule.forRoot({name: '__mydb', driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage]}),
-  
-  ],
+]
+    ,
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy, },
      StorageService, 
      provideCharts(withDefaultRegisterables())],

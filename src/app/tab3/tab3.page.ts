@@ -19,7 +19,7 @@ export class Tab3Page {
       }
     );
   }
-  User: User = new User(0, "", "", "", "", "", 0, 0);
+  User: User = new User(0, "", "", "", "", "", 0, 0,0,0);
   
    Toast = Swal.mixin({
     toast: true,
